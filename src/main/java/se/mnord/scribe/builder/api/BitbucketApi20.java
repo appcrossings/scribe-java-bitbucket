@@ -1,11 +1,12 @@
-package org.scribe.builder.api;
+package se.mnord.scribe.builder.api;
 
+import org.scribe.builder.api.DefaultApi20;
 import org.scribe.extractors.AccessTokenExtractor;
 import org.scribe.extractors.JsonTokenExtractor;
 import org.scribe.model.OAuthConfig;
 import org.scribe.model.ParameterList;
 import org.scribe.model.Verb;
-import org.scribe.oauth.BitbucketService20;
+import se.mnord.scribe.oauth.BitbucketService20;
 import org.scribe.oauth.OAuthService;
 
 /**

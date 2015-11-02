@@ -1,14 +1,16 @@
-package org.scribe.oauth;
+package se.mnord.scribe.oauth;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.scribe.builder.api.BitbucketApi20;
+import org.scribe.oauth.OAuthService;
+import se.mnord.scribe.builder.api.BitbucketApi20;
 import org.scribe.exceptions.OAuthException;
 import org.scribe.model.*;
 import org.scribe.services.Base64Encoder;
 import org.scribe.services.CommonsEncoder;
 import org.scribe.utils.OAuthEncoder;
+import se.mnord.scribe.oauth.BitbucketService20;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

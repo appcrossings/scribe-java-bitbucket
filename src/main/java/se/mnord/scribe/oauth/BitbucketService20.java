@@ -1,8 +1,9 @@
-package org.scribe.oauth;
+package se.mnord.scribe.oauth;
 
 import org.scribe.builder.api.DefaultApi20;
 import org.scribe.exceptions.OAuthException;
 import org.scribe.model.*;
+import org.scribe.oauth.OAuth20ServiceImpl;
 import org.scribe.services.Base64Encoder;
 import org.scribe.services.CommonsEncoder;
 
@@ -29,8 +30,8 @@ public class BitbucketService20 extends OAuth20ServiceImpl {
      * Uses the authorization code to retrieve an access token from Bitbucket
      *
      * @param requestToken  Not used
-     * @param verifier      A {@Link org.scribe.model.Verifier} object containing the authorization code
-     * @return              A {@Link org.scribe.model.Token} containing the access token
+     * @param verifier      A {@link org.scribe.model.Verifier} object containing the authorization code
+     * @return              A {@link org.scribe.model.Token} containing the access token
      */
     @Override
     public Token getAccessToken(Token requestToken, Verifier verifier) {
@@ -70,6 +71,9 @@ public class BitbucketService20 extends OAuth20ServiceImpl {
     /**
      * Sends the request and returns the response.
      * Override this method in unit tests
+     *
+     * @param request   The prepared request
+     * @return          The response
      */
     protected Response sendRequest(OAuthRequest request) {
         return request.send();

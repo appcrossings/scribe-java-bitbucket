@@ -4,12 +4,36 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.scribe</groupId>
+    <groupId>se.mnord.scribe</groupId>
     <artifactId>scribe-java-bitbucket</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-    <name>Bitbucket support for Scribe OAuth Library</name>
+    <name>Scribe OAuth Bitbucket</name>
+    <description>This package adds Bitbucket support for Scribe OAuth Library.
+        It makes it possible to request OAuth tokens and make authenticated api calls to Bitbucket, using
+        a Scribe Api class and an extended OAuth service class.</description>
     <url>http://github.com/nordvall/scribe-java-bitbucket</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Mattias Nordvall</name>
+            <email>mattias@mnord.se</email>
+            <url>http://github.com/nordvall</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/nordvall/scribe-java-bitbucket.git</connection>
+        <developerConnection>scm:git:https://github.com/nordvall/scribe-java-bitbucket.git</developerConnection>
+        <url>https://github.com/nordvall/scribe-java-bitbucket</url>
+    </scm>
 
     <dependencies>
         <dependency>
@@ -36,4 +60,35 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.3</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
