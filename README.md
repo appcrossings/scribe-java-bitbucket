@@ -10,7 +10,14 @@ OAuthService service = new ServiceBuilder()
                                   .build();
 ```
 
-The project is not available in any public Maven repository at the moment. To use it, clone this repository and run "mvn install"
-from the root folder.
-
 See the documentation for [Scribe](https://github.com/fernandezpablo85/scribe-java/) for more usage instructions.
+
+The project is available from Maven Central:
+
+```xml
+<dependency>
+    <groupId>se.mnord.scribe</groupId>
+    <artifactId>scribe-java-bitbucket</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
