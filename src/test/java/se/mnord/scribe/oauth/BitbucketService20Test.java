@@ -62,7 +62,7 @@ public class BitbucketService20Test {
                 assertTrue(formBody.contains("redirect_uri=" + OAuthEncoder.encode(config.getCallback())));
 
                 assertEquals(request.getHeaders().get("Authorization"),
-                        "Basic " + base64Encoder.encode("key:secret".getBytes()).toString());
+                        "Basic " + base64Encoder.encode("key:secret".getBytes()));
 
                 return mockResponse;
             }

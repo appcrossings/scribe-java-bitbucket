@@ -57,15 +57,12 @@ public class BitbucketService20 extends OAuth20ServiceImpl {
             throw new OAuthException("HTTP error response from Bitbucket: " + response.getCode());
         }
 
-        Token scribeToken = api.getAccessTokenExtractor().extract(responseBody);
-
-        return scribeToken;
+        return api.getAccessTokenExtractor().extract(responseBody);
     }
 
     private String createBasicCredentials(String username, String password) {
         String plainTextCredentials = String.format("%s:%s", username, password);
-        String encodedCredentials = base64Encoder.encode(plainTextCredentials.getBytes()).toString();
-        return encodedCredentials;
+        return base64Encoder.encode(plainTextCredentials.getBytes());
     }
 
     /**
