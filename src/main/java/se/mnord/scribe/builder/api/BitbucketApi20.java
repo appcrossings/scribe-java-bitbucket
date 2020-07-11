@@ -1,13 +1,13 @@
 package se.mnord.scribe.builder.api;
 
-import org.scribe.builder.api.DefaultApi20;
-import org.scribe.extractors.AccessTokenExtractor;
-import org.scribe.extractors.JsonTokenExtractor;
-import org.scribe.model.OAuthConfig;
-import org.scribe.model.ParameterList;
-import org.scribe.model.Verb;
-import se.mnord.scribe.oauth.BitbucketService20;
-import org.scribe.oauth.OAuthService;
+import com.github.scribejava.core.builder.api.DefaultApi20;
+import com.github.scribejava.core.extractors.OAuth2AccessTokenJsonExtractor;
+import com.github.scribejava.core.extractors.TokenExtractor;
+import com.github.scribejava.core.model.OAuth2AccessToken;
+import com.github.scribejava.core.model.ParameterList;
+import com.github.scribejava.core.model.Verb;
+
+import java.util.Map;
 
 /**
  * OAuth 2.0 API for Bitbucket.
@@ -15,40 +15,82 @@ import org.scribe.oauth.OAuthService;
  * @author Mattias Nordvall
  */
 public class BitbucketApi20 extends DefaultApi20 {
-    private static final String AUTHORIZE_URL = "https://bitbucket.org/site/oauth2/authorize";
-    private static final String TOKEN_URL = "https://bitbucket.org/site/oauth2/access_token";
 
-    @Override
-    public String getAccessTokenEndpoint() {
-        return TOKEN_URL;
+  private static final String AUTHORIZE_URL = "https://bitbucket.org/site/oauth2/authorize";
+  private static final String TOKEN_URL = "https://bitbucket.org/site/oauth2/access_token";
+
+  protected String getAuthorizationBaseUrl() {
+    return AUTHORIZE_URL;
+  }
+
+  @Override
+  public String getAccessTokenEndpoint() {
+    return TOKEN_URL;
+  }
+
+  @Override
+  public Verb getAccessTokenVerb() {
+    return Verb.POST;
+  }
+
+  @Override
+  public String getAuthorizationUrl(
+      String responseType,
+      String apiKey,
+      String callback,
+      String scope,
+      String state,
+      Map<String, String> additionalParams) {
+
+    ParameterList parameters = new ParameterList(additionalParams);
+    parameters.add("response_type", "code");
+    parameters.add("client_id", apiKey);
+
+    if (state != null) parameters.add("state", state);
+
+    if (callback != null) {
+      parameters.add("redirect_uri", callback);
     }
 
-    @Override
-    public Verb getAccessTokenVerb() {
-        return Verb.POST;
-    }
+    return parameters.appendTo(AUTHORIZE_URL);
+  }
 
-    @Override
-    public String getAuthorizationUrl(OAuthConfig config) {
-        ParameterList parameters = new ParameterList();
-        parameters.add("response_type", "code");
-        parameters.add("client_id", config.getApiKey());
+  //  @Override
+  //  public OAuth20Service createService(
+  //      String apiKey,
+  //      String apiSecret,
+  //      String callback,
+  //      String defaultScope,
+  //      String responseType,
+  //      OutputStream debugStream,
+  //      String userAgent,
+  //      HttpClientConfig httpClientConfig,
+  //      HttpClient httpClient) {
+  //    return new BitbucketService20(
+  //        this,
+  //        apiKey,
+  //        apiSecret,
+  //        callback,
+  //        defaultScope,
+  //        responseType,
+  //        debugStream,
+  //        userAgent,
+  //        httpClientConfig,
+  //        httpClient);
+  //  }
 
-        if (config.getCallback() != null) {
-            parameters.add("redirect_uri", config.getCallback());
-        }
+  @Override
+  public TokenExtractor<OAuth2AccessToken> getAccessTokenExtractor() {
+    return OAuth2AccessTokenJsonExtractor.instance();
+  }
 
-        return parameters.appendTo(AUTHORIZE_URL);
-    }
+  public static BitbucketApi20 instance() {
+    return BitbucketApi20.InstanceHolder.INSTANCE;
+  }
 
-    @Override
-    public OAuthService createService(OAuthConfig config) {
-        return new BitbucketService20(this, config);
-    }
+  private static class InstanceHolder {
+    private static final BitbucketApi20 INSTANCE = new BitbucketApi20();
 
-    @Override
-    public AccessTokenExtractor getAccessTokenExtractor()
-    {
-        return new JsonTokenExtractor();
-    }
+    private InstanceHolder() {}
+  }
 }
